@@ -6,7 +6,7 @@ import type {
   SendIntent,
 } from "@regenic/connector-contract";
 import type { WeComImClient } from "./wecom-client";
-import { WeComApiError } from "./wecom-gateway";
+import { WeComApiError } from "./wecom-client";
 import { WECOM_SOURCE, type WeComChatMode } from "./wecom-message";
 
 export interface WeComChatEgressOptions {

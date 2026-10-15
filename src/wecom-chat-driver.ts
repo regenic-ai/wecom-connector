@@ -15,6 +15,7 @@ import {
 import {
   wecomClientFor,
   disconnectWeComClients,
+  type WeComCredentials,
   type WeComImClient,
 } from "./wecom-client";
 import {
@@ -50,8 +51,6 @@ import {
   wecomConversationIdFromStreamKey,
   wecomStreamKey,
 } from "./wecom-streams";
-import type { WeComCredentials } from "./wecom-gateway";
-
 export {
   wecomSelection,
   wecomStreamDiscover,

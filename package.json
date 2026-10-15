@@ -46,7 +46,7 @@
     "typecheck": "node scripts/link-regenic.mjs --required && tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
-    "ws": "^8.18.3"
+    "@wecom/aibot-node-sdk": "^1.0.6"
   },
   "peerDependencies": {
     "@regenic/connector-contract": ">=0.1.0",
@@ -54,7 +54,7 @@
   },
   "devDependencies": {
     "@types/node": "^22.10.2",
-    "@types/ws": "^8.18.1",
-    "typescript": "^5.7.2"
+    "typescript": "^5.7.2",
+    "ws": "^8.18.3"
   }
 }

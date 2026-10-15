@@ -9,15 +9,15 @@ export type {
   WeComConversation,
   WeComInboundMessage,
 } from "./wecom-message";
-export { WeComApiError, WECOM_WS_URL, WeComGateway } from "./wecom-gateway";
-export type { WeComCredentials, WeComFrame, OpenWeComSocket } from "./wecom-gateway";
 export {
+  WeComApiError,
   WeComAppClient,
   disconnectWeComClients,
   resetWeComClientsForTests,
   setWeComClientForTests,
   wecomClientFor,
 } from "./wecom-client";
+export type { WeComCredentials } from "./wecom-client";
 export type { WeComImClient } from "./wecom-client";
 export {
   acceptWeComFrame,

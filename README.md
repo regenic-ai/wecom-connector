@@ -2,7 +2,7 @@
 
 Regenic 的企业微信会话连接器。形态对齐飞书连接器：一个 `ChannelDriver` 负责安装、会话目录和回复，每条会话一个 poll stream，回复走同一个安装上的 egress。
 
-企业微信没有飞书 `lark-cli` 那种用户态历史拉取。这个连接器用智能机器人的 **长连接**接收消息，并用同一条连接上的 `aibot_send_msg` 把 Markdown 回复发回群或单聊。连接建立之前的历史不会补拉。群消息只有有人 @机器人 时才会进来；机器人要先收到该会话的一条消息，之后才能主动回复。
+企业微信没有飞书 `lark-cli` 那种用户态历史拉取。这个连接器用官方 [`@wecom/aibot-node-sdk`](https://github.com/WecomTeam/aibot-node-sdk) 建立智能机器人长连接，收 `aibot_msg_callback`，再用 `sendMessage` 把 Markdown 回复发回群或单聊。连接建立之前的历史不会补拉。群消息只有有人 @机器人 时才会进来；机器人要先收到该会话的一条消息，之后才能主动回复。
 
 ## 在企业微信后台
 
@@ -43,7 +43,7 @@ export REGENIC_CHANNEL_PLUGIN=/path/to/wecom-connector
 - **全部**：跟进所有会发到机器人的群和单聊。
 - **自选**：粘贴群 `chatid` 或单聊 `userid`，多个用逗号分隔。
 
-每个会话的发送上限是 30 条/分钟、1000 条/小时。同一机器人同一时间只能保持一条长连接，新的订阅会踢掉旧连接。
+每个会话的发送上限是 30 条/分钟、1000 条/小时。同一机器人同一时间只能保持一条长连接。新的订阅会踢掉旧连接，SDK 收到 `disconnected_event` 后这个进程不再重连。
 
 ## 开发
 
