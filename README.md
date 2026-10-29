@@ -37,6 +37,21 @@ export REGENIC_CHANNEL_PLUGIN=/path/to/wecom-connector
 
 安装卡片里填写 Bot ID。Secret 会进系统钥匙串，不会写进安装配置。也可以用环境变量 `WECOM_BOT_ID` 和 `WECOM_BOT_SECRET` 作为无界面安装的后备。
 
+## 本地 CLI
+
+构建后可用 `node dist/cli.js` 运行本地 CLI；安装包也提供 `wecom-connector` 命令：
+
+```bash
+wecom-connector setup --bot-id <Bot-ID>
+wecom-connector doctor
+wecom-connector conversations
+wecom-connector messages <会话 ID>
+```
+
+`setup` 只保存 CLI 本地选择用的 Bot ID，不会创建或修改 Regenic 安装，也不设置 Secret。配置默认保存在 `~/.regenic/wecom-cli.json`；可用 `REGENIC_WECOM_CONFIG` 指定配置文件，或用 `REGENIC_HOME` 指定 Regenic 主目录。Bot Secret 不接受为命令行参数，也不会写入此配置文件；Secret 仍需在 Regenic 安装设置中配置，或通过 `WECOM_BOT_SECRET` 提供给 Regenic 主进程。
+
+`doctor` 只检查本地配置与已收到消息的缓存，不会建立 WeCom 长连接，也看不到 Regenic 主进程当前的连接状态。CLI 和 Regenic 共用同一机器人连接；独立启动第二个连接会导致 WeCom 踢掉先前连接。`conversations` 和 `messages` 只显示此机器人已经收到并保存在本机的数据，不会补拉连接建立前的历史。
+
 同步范围：
 
 - **最近活跃**：跟进最近发到机器人的会话。

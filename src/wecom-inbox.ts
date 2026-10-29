@@ -1,4 +1,11 @@
-import { mkdirSync, readFileSync, renameSync, rmSync, writeFileSync } from "node:fs";
+import {
+  existsSync,
+  mkdirSync,
+  readFileSync,
+  renameSync,
+  rmSync,
+  writeFileSync,
+} from "node:fs";
 import { homedir } from "node:os";
 import { dirname, join } from "node:path";
 import {
@@ -106,6 +113,22 @@ export function listWeComConversations(
     .map(toConversation);
 }
 
+export function summarizeWeComInbox(botId: string): {
+  exists: boolean;
+  conversation_count: number;
+  message_count: number;
+} {
+  const inbox = load(botId);
+  return {
+    exists: existsSync(filePath(botId)),
+    conversation_count: Object.keys(inbox.conversations).length,
+    message_count: Object.values(inbox.messages).reduce(
+      (count, messages) => count + messages.length,
+      0,
+    ),
+  };
+}
+
 export function describeWeComConversation(
   botId: string,
   conversationId: string,
@@ -140,7 +163,15 @@ function load(botId: string): InboxFile {
     };
     memory.set(botId, inbox);
     return inbox;
-  } catch {
+  } catch (error) {
+    if (
+      typeof error !== "object" ||
+      error === null ||
+      !("code" in error) ||
+      error.code !== "ENOENT"
+    ) {
+      throw error;
+    }
     const inbox: InboxFile = { conversations: {}, messages: {} };
     memory.set(botId, inbox);
     return inbox;
