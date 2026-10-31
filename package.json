@@ -52,12 +52,18 @@
     "@wecom/aibot-node-sdk": "^1.0.6"
   },
   "peerDependencies": {
-    "@regenic/connector-contract": ">=0.1.0",
+    "@regenic/connector-contract": ">=0.2.0",
     "@regenic/plugin-host": ">=0.1.0"
   },
   "devDependencies": {
+    "@regenic/connector-test-utils": "0.1.0",
     "@types/node": "^22.10.2",
     "typescript": "^5.7.2",
     "ws": "^8.18.3"
+  },
+  "pnpm": {
+    "overrides": {
+      "@regenic/connector-test-utils@0.1.0>@regenic/connector-contract": "0.2.0"
+    }
   }
 }
